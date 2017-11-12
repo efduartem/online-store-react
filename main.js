@@ -1,6 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App.jsx';
+import {render} from 'react-dom';
+import HeaderComponent from './components/headerComponent.jsx';
 
-
-ReactDOM.render(<App/>, document.getElementById('app'));
+render(
+    <HeaderComponent/>,
+    document.getElementById('app')
+)
