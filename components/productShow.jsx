@@ -1,10 +1,14 @@
 import React from 'react';
 import * as request from 'superagent';
-import { Link } from 'react-router-dom';
 
 
 const productImage = {
   height:'450px'
+}
+
+const body = {
+  backgroundColor: 'white',
+  padding: '2%'
 }
 
 
@@ -18,11 +22,12 @@ class ProductShow extends React.Component{
     }
 
     componentWillMount(){
-      let productIndex = this.props.match.params.index;
+      //console.log(this.props.showProductId);
+      let productIndex = this.props.showProductId;//this.props.match.params.index;
       request.get('https://online-store-nextu.firebaseio.com/productos/'+productIndex+'.json')
               .end((err, res)=>{
                 if(err || !res.ok){
-                  console.log("Error en la peticio: "+err);
+                  console.log("Error en la peticion: "+err);
                 }else{
                   this.setState({ producto : JSON.parse(res.text)});
                 }
@@ -32,7 +37,7 @@ class ProductShow extends React.Component{
     render(){
 
         return(
-        <div className="row">
+        <div style={body} className="row">
           <div className="col-sm-12">
             <div className="col-sm-12 col-md-6 text-left">
               <h1>{this.state.producto.nombre}</h1>
@@ -43,12 +48,12 @@ class ProductShow extends React.Component{
               <img src={this.state.producto.img} alt={this.state.producto.nombre} style={productImage}/>
             </div>
             <div className="col-sm-4">
-              <p><strong>Precio:</strong> Gs. {this.state.producto.precio}</p>
+              <p><strong>Precio:</strong> PYG {this.state.producto.precio}</p>
               <p><strong>Unidades Disponibles:</strong> {this.state.producto.stock}</p>
             </div>
             <div className="col-sm-12">
               <p>
-                <Link to={{pathname: '/productList'}} className="btn btn-primary" role="button">Atras</Link>
+                <a className="btn btn-primary" role="button" onClick={this.props.showCatalogList.bind(this)}>Atras</a>
               </p>
             </div>
           </div>
